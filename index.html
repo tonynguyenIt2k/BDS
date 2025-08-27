@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BĐS Modern — Demo giao diện</title>
+  <meta name="description" content="Giao diện bất động sản hiện đại">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#effef8',
+              100: '#d8fbef',
+              200: '#b5f6e2',
+              300: '#86ecd0',
+              400: '#4ad8b6',
+              500: '#1dbb98',
+              600: '#109c7e',
+              700: '#0d7d66',
+              800: '#0f6352',
+              900: '#0e5245'
+            }
+          },
+          boxShadow: {
+            'soft': '0 10px 30px rgba(2, 6, 23, 0.12)'
+          },
+          backdropBlur: {
+            xs: '2px'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.15);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .scrollx {
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .snap {
+      scroll-snap-align: start;
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="antialiased text-slate-800">
+  <div class="fixed bottom-5 right-5 z-50 flex flex-col gap-2">
+    <a href="tel:0396297856" class="rounded-full px-4 py-2 bg-brand-600 text-white shadow-soft active:scale-95 transition">📞 Hotline</a>
+    <a href="https://zalo.me/0396297856" class="rounded-full px-4 py-2 bg-sky-600 text-white shadow-soft active:scale-95 transition">Zalo</a>
+  </div>
+  <header x-data="{open:false}" class="sticky top-0 z-40 bg-white/70 backdrop-blur border-b border-slate-200">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="h-16 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-2">
+          <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-emerald-600 text-white font-bold">B</span>
+          <span class="font-semibold tracking-tight">BĐS Modern</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a href="#listings" class="hover:text-brand-700">Tin đăng</a>
+          <a href="#projects" class="hover:text-brand-700">Dự án</a>
+          <a href="#blog" class="hover:text-brand-700">Tin tức</a>
+          <a href="#contact" class="hover:text-brand-700">Liên hệ</a>
+          <a href="#contact" class="ml-1 px-3 py-1.5 rounded-lg bg-brand-600 text-white hover:bg-brand-700 shadow-soft">Đăng ký tư vấn</a>
+        </nav>
+        <button @click="open=!open" class="md:hidden w-10 h-10 rounded-lg border border-slate-200">☰</button>
+      </div>
+      <div x-show="open" x-transition class="md:hidden pb-3">
+        <div class="grid gap-2 text-sm">
+          <a class="px-3 py-2 rounded hover:bg-slate-50" href="#listings">Tin đăng</a>
+          <a class="px-3 py-2 rounded hover:bg-slate-50" href="#projects">Dự án</a>
+          <a class="px-3 py-2 rounded hover:bg-slate-50" href="#blog">Tin tức</a>
+          <a class="px-3 py-2 rounded hover:bg-slate-50" href="#contact">Liên hệ</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-10">
+      <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600&auto=format&fit=crop" alt="hero">
+      <div class="absolute inset-0 bg-slate-900/60"></div>
+      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[1200px] h-[1200px] rounded-full bg-gradient-to-b from-brand-400/30 to-transparent blur-3xl"></div>
+    </div>
+    <div class="max-w-6xl mx-auto px-4 py-20 md:py-28 text-white">
+      <div class="max-w-2xl">
+        <p class="uppercase tracking-[.2em] text-brand-200 text-xs mb-3">Real Estate • 2025</p>
+        <h1 class="text-4xl md:text-6xl font-bold leading-tight">Nơi bắt đầu hành trình <span class="text-brand-300">an cư</span> & <span class="text-brand-300">đầu tư</span></h1>
+        <p class="mt-4/6 text-white/90 mt-4">Dữ liệu minh bạch • Hỗ trợ pháp lý • Tư vấn tài chính.</p>
+      </div>
+      <div class="mt-8 glass rounded-2xl p-3 md:p-4">
+        <form class="grid md:grid-cols-6 gap-3 text-slate-900">
+          <input type="text" placeholder="Tìm khu vực, dự án, tuyến đường…" class="md:col-span-3 px-3 py-2 rounded-lg border border-white/40 focus:outline-none focus:ring-2 focus:ring-brand-400/80">
+          <select class="px-3 py-2 rounded-lg border border-white/40 focus:outline-none focus:ring-2 focus:ring-brand-400/80"><option>Loại hình</option><option>Căn hộ</option><option>Nhà phố</option><option>Đất nền</option><option>Cho thuê</option></select>
+          <select class="px-3 py-2 rounded-lg border border-white/40 focus:outline-none focus:ring-2 focus:ring-brand-400/80"><option>Tỉnh/Thành</option><option>Hà Nội</option><option>TP.HCM</option><option>Đà Nẵng</option></select>
+          <select class="px-3 py-2 rounded-lg border border-white/40 focus:outline-none focus:ring-2 focus:ring-brand-400/80"><option>Mức giá</option><option>Dưới 2 tỷ</option><option>2–5 tỷ</option><option>5–10 tỷ</option><option>Trên 10 tỷ</option></select>
+          <button class="px-4 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-white shadow-soft">Tìm kiếm</button>
+        </form>
+        <div class="mt-3 flex flex-wrap gap-2 text-xs">
+          <span class="px-2 py-1 rounded-full bg-white/20 text-white">Tất cả</span>
+          <span class="px-2 py-1 rounded-full bg-white text-slate-800">Mua</span>
+          <span class="px-2 py-1 rounded-full bg-white/20 text-white">Thuê</span>
+          <span class="px-2 py-1 rounded-full bg-white/20 text-white">Dự án mới</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="listings" class="py-14 md:py-18">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-end justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold">Tin đăng nổi bật</h2>
+          <p class="text-slate-500">Kéo ngang trên điện thoại • Grid trên desktop</p>
+        </div>
+        <div class="hidden md:flex gap-2">
+          <button class="prev-list px-3 py-1.5 rounded-lg border border-slate-200">←</button>
+          <button class="next-list px-3 py-1.5 rounded-lg border border-slate-200">→</button>
+        </div>
+      </div>
+      <div class="relative">
+  <div
+    class="flex md:grid md:grid-cols-3 md:gap-6
+           gap-4 overflow-x-auto md:overflow-visible
+           no-scrollbar scrollx pr-2 md:pr-0"
+    id="track-listings">
+
+    <div class="snap min-w-[78%] sm:min-w-[48%] md:min-w-0 md:w-auto rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1600&auto=format&fit=crop" alt="Listing" class="h-56 w-full object-cover">
+        <span class="absolute top-3 left-3 px-2 py-1 text-xs rounded bg-brand-600 text-white">Bán</span>
+        <span class="absolute top-3 right-3 px-2 py-1 text-xs rounded bg-white/90">80 m²</span>
+      </div>
+      <div class="p-4">
+        <h3 class="font-semibold line-clamp-2">Nhà phố 2 tầng, trung tâm quận, nội thất cao cấp</h3>
+        <p class="mt-1 text-sm text-slate-500">Cầu Giấy, Hà Nội • 3PN • 2WC</p>
+        <div class="mt-3 flex items-center justify-between">
+          <div class="text-brand-700 font-bold">5,2 tỷ</div>
+          <a href="#" class="text-sm px-3 py-1.5 rounded-lg border border-brand-600 text-brand-700 hover:bg-brand-50">Chi tiết</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="snap min-w-[78%] sm:min-w-[48%] md:min-w-0 md:w-auto rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1600&auto=format&fit=crop" alt="Listing" class="h-56 w-full object-cover">
+        <span class="absolute top-3 left-3 px-2 py-1 text-xs rounded bg-brand-600 text-white">Cho thuê</span>
+        <span class="absolute top-3 right-3 px-2 py-1 text-xs rounded bg-white/90">65 m²</span>
+      </div>
+      <div class="p-4">
+        <h3 class="font-semibold line-clamp-2">Căn hộ 2PN view hồ, full nội thất, nhận nhà ngay</h3>
+        <p class="mt-1 text-sm text-slate-500">Quận 7, TP.HCM • 2PN • 2WC</p>
+        <div class="mt-3 flex items-center justify-between">
+          <div class="text-brand-700 font-bold">12 triệu/tháng</div>
+          <a href="#" class="text-sm px-3 py-1.5 rounded-lg border border-brand-600 text-brand-700 hover:bg-brand-50">Chi tiết</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="snap min-w-[78%] sm:min-w-[48%] md:min-w-0 md:w-auto rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1451976426598-a7593bd6d0b2?q=80&w=1600&auto=format&fit=crop" alt="Listing" class="h-56 w-full object-cover">
+        <span class="absolute top-3 left-3 px-2 py-1 text-xs rounded bg-brand-600 text-white">Bán</span>
+        <span class="absolute top-3 right-3 px-2 py-1 text-xs rounded bg-white/90">120 m²</span>
+      </div>
+      <div class="p-4">
+        <h3 class="font-semibold line-clamp-2">Biệt thự mini sân vườn, khu dân cư an ninh</h3>
+        <p class="mt-1 text-sm text-slate-500">Thủ Đức, TP.HCM • 4PN • 3WC</p>
+        <div class="mt-3 flex items-center justify-between">
+          <div class="text-brand-700 font-bold">12,8 tỷ</div>
+          <a href="#" class="text-sm px-3 py-1.5 rounded-lg border border-brand-600 text-brand-700 hover:bg-brand-50">Chi tiết</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="snap min-w-[78%] sm:min-w-[48%] md:min-w-0 md:w-auto rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1600&auto=format&fit=crop" alt="Listing" class="h-56 w-full object-cover">
+        <span class="absolute top-3 left-3 px-2 py-1 text-xs rounded bg-brand-600 text-white">Bán</span>
+        <span class="absolute top-3 right-3 px-2 py-1 text-xs rounded bg-white/90">95 m²</span>
+      </div>
+      <div class="p-4">
+        <h3 class="font-semibold line-clamp-2">Căn góc nhiều ánh sáng, gần trường & công viên</h3>
+        <p class="mt-1 text-sm text-slate-500">Nam Từ Liêm, Hà Nội • 3PN • 2WC</p>
+        <div class="mt-3 flex items-center justify-between">
+          <div class="text-brand-700 font-bold">4,6 tỷ</div>
+          <a href="#" class="text-sm px-3 py-1.5 rounded-lg border border-brand-600 text-brand-700 hover:bg-brand-50">Chi tiết</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="snap min-w-[78%] sm:min-w-[48%] md:min-w-0 md:w-auto rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1600&auto=format&fit=crop" alt="Listing" class="h-56 w-full object-cover">
+        <span class="absolute top-3 left-3 px-2 py-1 text-xs rounded bg-brand-600 text-white">Cho thuê</span>
+        <span class="absolute top-3 right-3 px-2 py-1 text-xs rounded bg-white/90">40 m²</span>
+      </div>
+      <div class="p-4">
+        <h3 class="font-semibold line-clamp-2">Studio nội thất Bắc Âu, ban công thoáng</h3>
+        <p class="mt-1 text-sm text-slate-500">Cầu Giấy, Hà Nội • 1PN • 1WC</p>
+        <div class="mt-3 flex items-center justify-between">
+          <div class="text-brand-700 font-bold">7 triệu/tháng</div>
+          <a href="#" class="text-sm px-3 py-1.5 rounded-lg border border-brand-600 text-brand-700 hover:bg-brand-50">Chi tiết</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="snap min-w-[78%] sm:min-w-[48%] md:min-w-0 md:w-auto rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=1600&auto=format&fit=crop" alt="Listing" class="h-56 w-full object-cover">
+        <span class="absolute top-3 left-3 px-2 py-1 text-xs rounded bg-brand-600 text-white">Bán</span>
+        <span class="absolute top-3 right-3 px-2 py-1 text-xs rounded bg-white/90">78 m²</span>
+      </div>
+      <div class="p-4">
+        <h3 class="font-semibold line-clamp-2">Căn hộ cao cấp, tiện ích nội khu đầy đủ</h3>
+        <p class="mt-1 text-sm text-slate-500">Quận 2, TP.HCM • 2PN • 2WC</p>
+        <div class="mt-3 flex items-center justify-between">
+          <div class="text-brand-700 font-bold">3,9 tỷ</div>
+          <a href="#" class="text-sm px-3 py-1.5 rounded-lg border border-brand-600 text-brand-700 hover:bg-brand-50">Chi tiết</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="snap min-w-[78%] sm:min-w-[48%] md:min-w-0 md:w-auto rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop" alt="Listing" class="h-56 w-full object-cover">
+        <span class="absolute top-3 left-3 px-2 py-1 text-xs rounded bg-brand-600 text-white">Bán</span>
+        <span class="absolute top-3 right-3 px-2 py-1 text-xs rounded bg-white/90">68 m²</span>
+      </div>
+      <div class="p-4">
+        <h3 class="font-semibold line-clamp-2">Căn hộ view sông, tầng trung thoáng mát</h3>
+        <p class="mt-1 text-sm text-slate-500">Bình Thạnh, TP.HCM • 2PN • 2WC</p>
+        <div class="mt-3 flex items-center justify-between">
+          <div class="text-brand-700 font-bold">3,2 tỷ</div>
+          <a href="#" class="text-sm px-3 py-1.5 rounded-lg border border-brand-600 text-brand-700 hover:bg-brand-50">Chi tiết</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="snap min-w-[78%] sm:min-w-[48%] md:min-w-0 md:w-auto rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1600&auto=format&fit=crop" alt="Listing" class="h-56 w-full object-cover">
+        <span class="absolute top-3 left-3 px-2 py-1 text-xs rounded bg-brand-600 text-white">Cho thuê</span>
+        <span class="absolute top-3 right-3 px-2 py-1 text-xs rounded bg-white/90">90 m²</span>
+      </div>
+      <div class="p-4">
+        <h3 class="font-semibold line-clamp-2">Căn hộ 3PN, tiện ích đủ, gần TTTM</h3>
+        <p class="mt-1 text-sm text-slate-500">Hà Đông, Hà Nội • 3PN • 2WC</p>
+        <div class="mt-3 flex items-center justify-between">
+          <div class="text-brand-700 font-bold">15 triệu/tháng</div>
+          <a href="#" class="text-sm px-3 py-1.5 rounded-lg border border-brand-600 text-brand-700 hover:bg-brand-50">Chi tiết</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    </div>
+  </section>
+  <section id="projects" class="py-14 bg-slate-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-end justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold">Dự án tiêu biểu</h2>
+          <p class="text-slate-500">Snap & drag để xem nhanh</p>
+        </div>
+        <div class="hidden md:flex gap-2">
+          <button class="prev-proj px-3 py-1.5 rounded-lg border border-slate-200">←</button>
+          <button class="next-proj px-3 py-1.5 rounded-lg border border-slate-200">→</button>
+        </div>
+      </div>
+      <div class="flex gap-4 overflow-x-auto no-scrollbar scrollx" id="track-projects">
+        
+<article class="snap min-w-[84%] sm:min-w-[50%] md:min-w-[32%] rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+  <img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=1600&auto=format&fit=crop" class="h-48 w-full object-cover" alt="Project">
+  <div class="p-4">
+    <h3 class="font-semibold">The Emerald Residence</h3>
+    <p class="text-sm text-slate-500 mt-1">Quận 9, TP.HCM • Căn hộ cao cấp</p>
+    <a href="#" class="inline-block mt-3 text-sm px-3 py-1.5 rounded-lg bg-brand-600 text-white hover:bg-brand-700">Xem dự án</a>
+  </div>
+</article>
+
+<article class="snap min-w-[84%] sm:min-w-[50%] md:min-w-[32%] rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+  <img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=1600&auto=format&fit=crop" class="h-48 w-full object-cover" alt="Project">
+  <div class="p-4">
+    <h3 class="font-semibold">Riverside Park</h3>
+    <p class="text-sm text-slate-500 mt-1">Hà Nội • Khu đô thị xanh</p>
+    <a href="#" class="inline-block mt-3 text-sm px-3 py-1.5 rounded-lg bg-brand-600 text-white hover:bg-brand-700">Xem dự án</a>
+  </div>
+</article>
+
+<article class="snap min-w-[84%] sm:min-w-[50%] md:min-w-[32%] rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+  <img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=1600&auto=format&fit=crop" class="h-48 w-full object-cover" alt="Project">
+  <div class="p-4">
+    <h3 class="font-semibold">Sunlake City</h3>
+    <p class="text-sm text-slate-500 mt-1">Đà Nẵng • Đô thị ven hồ</p>
+    <a href="#" class="inline-block mt-3 text-sm px-3 py-1.5 rounded-lg bg-brand-600 text-white hover:bg-brand-700">Xem dự án</a>
+  </div>
+</article>
+
+<article class="snap min-w-[84%] sm:min-w-[50%] md:min-w-[32%] rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+  <img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=1600&auto=format&fit=crop" class="h-48 w-full object-cover" alt="Project">
+  <div class="p-4">
+    <h3 class="font-semibold">Green Town</h3>
+    <p class="text-sm text-slate-500 mt-1">Bình Dương • Đại đô thị</p>
+    <a href="#" class="inline-block mt-3 text-sm px-3 py-1.5 rounded-lg bg-brand-600 text-white hover:bg-brand-700">Xem dự án</a>
+  </div>
+</article>
+
+      </div>
+    </div>
+  </section>
+  <section id="blog" class="py-14">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-end justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold">Tin tức & Góc tư vấn</h2>
+          <p class="text-slate-500">Tối ưu đọc nhanh trên mobile</p>
+        </div>
+        <div class="hidden md:flex gap-2">
+          <button class="prev-blog px-3 py-1.5 rounded-lg border border-slate-200">←</button>
+          <button class="next-blog px-3 py-1.5 rounded-lg border border-slate-200">→</button>
+        </div>
+      </div>
+      <div class="flex gap-4 overflow-x-auto no-scrollbar scrollx" id="track-blog">
+        
+<article class="snap min-w-[84%] sm:min-w-[50%] md:min-w-[32%] rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+  <img src="https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?q=80&w=1600&auto=format&fit=crop" class="h-44 w-full object-cover" alt="Blog">
+  <div class="p-4">
+    <h3 class="font-semibold">Hướng dẫn vay mua nhà lần đầu</h3>
+    <p class="text-sm text-slate-600 mt-1 line-clamp-2">Những điều cần biết về hồ sơ, lãi suất, thời hạn…</p>
+  <a href="#" class="inline-block mt-3 text-sm text-brand-700 hover:text-brand-800">Đọc thêm</a>
+  </div>
+</article>
+
+<article class="snap min-w-[84%] sm:min-w-[50%] md:min-w-[32%] rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+  <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1600&auto=format&fit=crop" class="h-44 w-full object-cover" alt="Blog">
+  <div class="p-4">
+    <h3 class="font-semibold">5 lưu ý vàng khi xem nhà mẫu</h3>
+    <p class="text-sm text-slate-600 mt-1 line-clamp-2">Đừng bỏ qua vị trí, pháp lý, tiện ích nội – ngoại khu…</p>
+  <a href="#" class="inline-block mt-3 text-sm text-brand-700 hover:text-brand-800">Đọc thêm</a>
+  </div>
+</article>
+
+<article class="snap min-w-[84%] sm:min-w-[50%] md:min-w-[32%] rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+  <img src="https://images.unsplash.com/photo-1496302662116-35cc4f36df92?q=80&w=1600&auto=format&fit=crop" class="h-44 w-full object-cover" alt="Blog">
+  <div class="p-4">
+    <h3 class="font-semibold">Thủ tục sang tên sổ đỏ chi tiết</h3>
+    <p class="text-sm text-slate-600 mt-1 line-clamp-2">Các bước, chi phí và thời gian xử lý hồ sơ…</p>
+  <a href="#" class="inline-block mt-3 text-sm text-brand-700 hover:text-brand-800">Đọc thêm</a>
+  </div>
+</article>
+
+<article class="snap min-w-[84%] sm:min-w-[50%] md:min-w-[32%] rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+  <img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=1600&auto=format&fit=crop" class="h-44 w-full object-cover" alt="Blog">
+  <div class="p-4">
+    <h3 class="font-semibold">Dòng tiền cho thuê 2025</h3>
+    <p class="text-sm text-slate-600 mt-1 line-clamp-2">Cách tối ưu tỷ suất và quản lý rủi ro…</p>
+  <a href="#" class="inline-block mt-3 text-sm text-brand-700 hover:text-brand-800">Đọc thêm</a>
+  </div>
+</article>
+
+      </div>
+    </div>
+  </section>
+  <section id="contact" class="py-16 md:py-20 bg-gradient-to-b from-slate-50 to-white">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-bold">Liên hệ tư vấn miễn phí</h2>
+        <p class="text-slate-600 mt-2">Để lại thông tin – chuyên viên sẽ gọi lại trong 15 phút.</p>
+        <form class="mt-6 grid gap-3">
+          <input class="px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-400" placeholder="Họ và tên">
+          <input class="px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-400" placeholder="Số điện thoại">
+          <textarea class="px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-400" rows="4" placeholder="Nhu cầu của bạn"></textarea>
+          <button class="px-4 py-2 rounded-lg bg-brand-600 text-white hover:bg-brand-700 w-max shadow-soft">Gửi thông tin</button>
+        </form>
+      </div>
+      <div class="rounded-2xl overflow-hidden border border-slate-200 shadow-soft">
+        <iframe class="w-full h-[320px]" src="https://maps.google.com/maps?q=Hanoi&t=&z=12&ie=UTF8&iwloc=&output=embed" title="Map"></iframe>
+      </div>
+    </div>
+  </section>
+  <footer class="bg-slate-950 text-slate-300">
+    <div class="max-w-6xl mx-auto px-4 py-12 grid md:grid-cols-4 gap-8">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-emerald-600 text-white font-bold">B</span>
+          <span class="font-semibold">BĐS Modern</span>
+        </div>
+        <p class="mt-3 text-sm text-slate-400">Giao diện demo phục vụ mục đích tham khảo. Ảnh minh họa từ Unsplash.</p>
+      </div>
+      <div>
+        <h4 class="font-semibold">Liên hệ</h4>
+        <ul class="mt-3 space-y-1 text-sm">
+          <li>Hotline: 0396 297 856</li>
+          <li>Zalo: 0396 297 856</li>
+          <li>Email: contact@example.com</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold">Danh mục</h4>
+        <ul class="mt-3 space-y-1 text-sm">
+          <li><a href="#listings" class="hover:text-white">Tin đăng</a></li>
+          <li><a href="#projects" class="hover:text-white">Dự án</a></li>
+          <li><a href="#blog" class="hover:text-white">Tin tức</a></li>
+          <li><a href="#contact" class="hover:text-white">Liên hệ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold">Kết nối</h4>
+        <div class="mt-3 flex gap-3 text-sm"><a href="#">Facebook</a><a href="#">YouTube</a><a href="#">TikTok</a></div>
+      </div>
+    </div>
+    <div class="border-t border-slate-800">
+      <div class="max-w-6xl mx-auto px-4 py-4 text-xs text-slate-500 flex items-center justify-between">
+        <span>© 2025 BĐS Modern. All rights reserved.</span>
+        <a href="#top" class="hover:text-white">↑ Lên đầu trang</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    function makeSlider(trackId, prevSel, nextSel) {
+      const track = document.getElementById(trackId);
+      if (!track) return;
+      let isDown = false, startX = 0, scrollLeft = 0;
+      track.addEventListener('mousedown', (e)=>{ isDown = true; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; track.classList.add('cursor-grabbing'); });
+      track.addEventListener('mouseleave', ()=>{ isDown = false; track.classList.remove('cursor-grabbing'); });
+      track.addEventListener('mouseup', ()=>{ isDown = false; track.classList.remove('cursor-grabbing'); });
+      track.addEventListener('mousemove', (e)=>{
+        if(!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - track.offsetLeft;
+        const walk = (x - startX) * 1;
+        track.scrollLeft = scrollLeft - walk;
+      });
+      let startTouch = 0, touchScrollLeft = 0;
+      track.addEventListener('touchstart', (e)=>{ startTouch = e.touches[0].pageX; touchScrollLeft = track.scrollLeft; }, {passive:true});
+      track.addEventListener('touchmove', (e)=>{ const x = e.touches[0].pageX; const walk = (x - startTouch)*1; track.scrollLeft = touchScrollLeft - walk; }, {passive:true});
+      const prev = document.querySelector(prevSel);
+      const next = document.querySelector(nextSel);
+      const step = () => Math.min( Math.max(track.clientWidth * 0.9, 280), 1000 );
+      prev && prev.addEventListener('click', ()=> track.scrollBy({left: -step(), behavior:'smooth'}));
+      next && next.addEventListener('click', ()=> track.scrollBy({left: step(), behavior:'smooth'}));
+    }
+    makeSlider('track-listings', '.prev-list', '.next-list');
+    makeSlider('track-projects', '.prev-proj', '.next-proj');
+    makeSlider('track-blog', '.prev-blog', '.next-blog');
+  </script>
+</body>
+</html>
