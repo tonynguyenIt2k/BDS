@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chi tiết BĐS — BĐS Modern</title>
+  <meta name="description" content="Trang chi tiết bất động sản">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {50:'#effef8',100:'#d8fbef',200:'#b5f6e2',300:'#86ecd0',400:'#4ad8b6',500:'#1dbb98',600:'#109c7e',700:'#0d7d66',800:'#0f6352',900:'#0e5245'}
+          },
+          boxShadow: { soft:'0 10px 30px rgba(2,6,23,.12)'}
+        }
+      }
+    }
+  </script>
+  <style>
+    .no-scrollbar::-webkit-scrollbar{display:none}
+    .no-scrollbar{scrollbar-width:none}
+    .scrollx{scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;touch-action:pan-x;overscroll-behavior-x:contain}
+    .snap{scroll-snap-align:start}
+  </style>
+</head>
+<body class="antialiased text-slate-800">
+  <!-- Header đơn giản -->
+  <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-emerald-600 text-white font-bold">B</span>
+        <span class="font-semibold tracking-tight">BĐS Modern</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="index.html#listings" class="hover:text-brand-700">Tin đăng</a>
+        <a href="index.html#projects" class="hover:text-brand-700">Dự án</a>
+        <a href="index.html#blog" class="hover:text-brand-700">Tin tức</a>
+        <a href="index.html#contact" class="hover:text-brand-700">Liên hệ</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <div class="border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 py-3 text-sm text-slate-500 flex items-center gap-2">
+      <a href="index.html" class="hover:text-brand-600">Trang chủ</a>
+      <span>›</span>
+      <a href="index.html#listings" class="hover:text-brand-600">Tin đăng</a>
+      <span>›</span>
+      <span id="crumbTitle" class="text-slate-700 line-clamp-1">Chi tiết</span>
+    </div>
+  </div>
+
+  <!-- Title + price -->
+  <section class="max-w-6xl mx-auto px-4 py-6">
+    <h1 id="title" class="text-2xl md:text-3xl font-bold">Nhà phố 2 tầng, trung tâm quận, nội thất cao cấp</h1>
+    <div class="mt-2 flex flex-wrap items-center gap-3 text-slate-600">
+      <span id="address">Cầu Giấy, Hà Nội</span>
+      <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+      <span id="area">80 m²</span>
+      <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+      <span id="beds">3 PN</span>
+      <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+      <span id="baths">2 WC</span>
+    </div>
+    <div class="mt-3 text-brand-700 text-2xl font-bold" id="price">5,2 tỷ</div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="max-w-6xl mx-auto px-4">
+    <div class="rounded-2xl overflow-hidden border border-slate-200">
+      <!-- Ảnh chính -->
+      <div id="galleryTrack" class="flex gap-2 overflow-x-auto no-scrollbar scrollx p-2">
+        <!-- ảnh sample -->
+        <img class="snap w-[85%] sm:w-[60%] md:w-[48%] rounded-xl object-cover" src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1600&auto=format&fit=crop" alt="Ảnh 1">
+        <img class="snap w-[85%] sm:w-[60%] md:w-[48%] rounded-xl object-cover" src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1600&auto=format&fit=crop" alt="Ảnh 2">
+        <img class="snap w-[85%] sm:w-[60%] md:w-[48%] rounded-xl object-cover" src="https://images.unsplash.com/photo-1451976426598-a7593bd6d0b2?q=80&w=1600&auto=format&fit=crop" alt="Ảnh 3">
+        <img class="snap w-[85%] sm:w-[60%] md:w-[48%] rounded-xl object-cover" src="https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1600&auto=format&fit=crop" alt="Ảnh 4">
+      </div>
+    </div>
+    <!-- thumbnail -->
+    <div class="mt-3 flex gap-2 overflow-x-auto no-scrollbar">
+      <button class="thumb w-20 h-14 rounded-lg overflow-hidden border-2 border-transparent hover:border-brand-400">
+        <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=800&auto=format&fit=crop" alt="">
+      </button>
+      <button class="thumb w-20 h-14 rounded-lg overflow-hidden border-2 border-transparent hover:border-brand-400">
+        <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=800&auto=format&fit=crop" alt="">
+      </button>
+      <button class="thumb w-20 h-14 rounded-lg overflow-hidden border-2 border-transparent hover:border-brand-400">
+        <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1451976426598-a7593bd6d0b2?q=80&w=800&auto=format&fit=crop" alt="">
+      </button>
+      <button class="thumb w-20 h-14 rounded-lg overflow-hidden border-2 border-transparent hover:border-brand-400">
+        <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=800&auto=format&fit=crop" alt="">
+      </button>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="max-w-6xl mx-auto px-4 py-8 grid md:grid-cols-3 gap-8">
+    <!-- left -->
+    <div class="md:col-span-2">
+      <!-- Thông số nhanh -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="rounded-xl border border-slate-200 p-3">
+          <div class="text-xs text-slate-500">Diện tích</div>
+          <div class="font-semibold" id="area2">80 m²</div>
+        </div>
+        <div class="rounded-xl border border-slate-200 p-3">
+          <div class="text-xs text-slate-500">Phòng ngủ</div>
+          <div class="font-semibold" id="beds2">3</div>
+        </div>
+        <div class="rounded-xl border border-slate-200 p-3">
+          <div class="text-xs text-slate-500">Phòng tắm</div>
+          <div class="font-semibold" id="baths2">2</div>
+        </div>
+        <div class="rounded-xl border border-slate-200 p-3">
+          <div class="text-xs text-slate-500">Hướng</div>
+          <div class="font-semibold" id="facing">Đông Nam</div>
+        </div>
+      </div>
+
+      <!-- Mô tả -->
+      <div class="mt-6">
+        <h2 class="text-lg font-semibold">Mô tả chi tiết</h2>
+        <p class="mt-2 text-slate-700 leading-relaxed">
+          Nhà phố 2 tầng thiết kế tối ưu công năng, nội thất cao cấp, ánh sáng tự nhiên. Khu dân cư an ninh, hạ tầng đồng bộ,
+          gần trường học, công viên và trung tâm thương mại. Pháp lý rõ ràng, hỗ trợ vay ngân hàng.
+        </p>
+      </div>
+
+      <!-- Tiện ích -->
+      <div class="mt-6">
+        <h2 class="text-lg font-semibold">Tiện ích & Nội thất</h2>
+        <div class="mt-3 flex flex-wrap gap-2 text-sm">
+          <span class="px-3 py-1.5 rounded-full border border-slate-200">Bếp âm</span>
+          <span class="px-3 py-1.5 rounded-full border border-slate-200">Sàn gỗ</span>
+          <span class="px-3 py-1.5 rounded-full border border-slate-200">Ban công</span>
+          <span class="px-3 py-1.5 rounded-full border border-slate-200">Sân để xe</span>
+          <span class="px-3 py-1.5 rounded-full border border-slate-200">Gần công viên</span>
+        </div>
+      </div>
+
+      <!-- Bản đồ -->
+      <div class="mt-6">
+        <h2 class="text-lg font-semibold">Vị trí</h2>
+        <div class="mt-3 rounded-2xl overflow-hidden border border-slate-200">
+          <iframe class="w-full h-[340px]" src="https://maps.google.com/maps?q=Cau%20Giay%20Ha%20Noi&t=&z=14&ie=UTF8&iwloc=&output=embed" title="Map"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- right -->
+    <aside class="md:col-span-1">
+      <div class="rounded-2xl border border-slate-200 p-4 shadow-soft">
+        <div class="text-sm text-slate-500">Giá</div>
+        <div class="text-2xl font-bold text-brand-700" id="priceBox">5,2 tỷ</div>
+        <div class="mt-4 text-sm text-slate-500">Liên hệ tư vấn</div>
+        <form class="mt-2 grid gap-2">
+          <input class="px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-400" placeholder="Họ và tên">
+          <input class="px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-400" placeholder="Số điện thoại">
+          <textarea class="px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-400" rows="3" placeholder="Câu hỏi của bạn"></textarea>
+          <button class="px-4 py-2 rounded-lg bg-brand-600 text-white hover:bg-brand-700">Gọi lại cho tôi</button>
+        </form>
+        <div class="mt-4 flex items-center gap-3">
+          <img class="w-12 h-12 rounded-full object-cover" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop" alt="Agent">
+          <div>
+            <div class="font-semibold">Nguyễn Minh</div>
+            <a href="tel:0396297856" class="text-sm text-brand-700 hover:text-brand-800">📞 0396 297 856</a>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Tin tương tự -->
+  <section class="max-w-6xl mx-auto px-4 pb-16">
+    <h2 class="text-lg font-semibold mb-3">Tin tương tự</h2>
+    <div class="flex gap-4 overflow-x-auto no-scrollbar scrollx pr-2">
+      <a href="detail.html?id=emerald-02" class="snap min-w-[80%] sm:min-w-[48%] md:min-w-[32%] rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+        <img class="h-44 w-full object-cover" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop" alt="">
+        <div class="p-4">
+          <div class="font-semibold line-clamp-1">Căn hộ cao cấp, tiện ích đủ</div>
+          <div class="text-sm text-slate-500">Quận 2, TP.HCM • 78 m²</div>
+          <div class="mt-1 text-brand-700 font-semibold">3,9 tỷ</div>
+        </div>
+      </a>
+      <a href="detail.html?id=emerald-03" class="snap min-w-[80%] sm:min-w-[48%] md:min-w-[32%] rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+        <img class="h-44 w-full object-cover" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop" alt="">
+        <div class="p-4">
+          <div class="font-semibold line-clamp-1">Căn hộ view sông, tầng trung</div>
+          <div class="text-sm text-slate-500">Bình Thạnh, TP.HCM • 68 m²</div>
+          <div class="mt-1 text-brand-700 font-semibold">3,2 tỷ</div>
+        </div>
+      </a>
+      <a href="detail.html?id=emerald-04" class="snap min-w-[80%] sm:min-w-[48%] md:min-w-[32%] rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-soft">
+        <img class="h-44 w-full object-cover" src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1600&auto=format&fit=crop" alt="">
+        <div class="p-4">
+          <div class="font-semibold line-clamp-1">Căn hộ 3PN, gần TTTM</div>
+          <div class="text-sm text-slate-500">Hà Đông, Hà Nội • 90 m²</div>
+          <div class="mt-1 text-brand-700 font-semibold">15 triệu/tháng</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA dính dưới (mobile) -->
+  <div class="md:hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t border-slate-200 p-3 z-50">
+    <div class="max-w-6xl mx-auto px-2 flex items-center justify-between gap-3">
+      <div>
+        <div class="text-xs text-slate-500">Giá</div>
+        <div class="font-semibold text-brand-700" id="priceSticky">5,2 tỷ</div>
+      </div>
+      <a href="tel:0396297856" class="px-4 py-2 rounded-lg bg-brand-600 text-white shadow-soft">Gọi tư vấn</a>
+    </div>
+  </div>
+
+  <script>
+    // (Tuỳ chọn) Map id -> dữ liệu (demo). Khi có backend, bạn fetch theo id.
+    const SAMPLE = {
+      "emerald-01": {
+        title: "Nhà phố 2 tầng, trung tâm quận, nội thất cao cấp",
+        address: "Cầu Giấy, Hà Nội",
+        area: "80 m²", beds: "3", baths: "2",
+        price: "5,2 tỷ",
+        mapQuery: "Cau%20Giay%20Ha%20Noi"
+      },
+      "emerald-02": {
+        title: "Căn hộ cao cấp, tiện ích đủ",
+        address: "Quận 2, TP.HCM",
+        area: "78 m²", beds: "2", baths: "2",
+        price: "3,9 tỷ",
+        mapQuery: "Quan%202%20TPHCM"
+      }
+    };
+
+    // Lấy id từ query ?id=...
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id') || 'emerald-01';
+    const data = SAMPLE[id];
+
+    if(data){
+      document.getElementById('title').textContent = data.title;
+      document.getElementById('crumbTitle').textContent = data.title;
+      document.getElementById('address').textContent = data.address;
+      document.getElementById('area').textContent = data.area;
+      document.getElementById('beds').textContent = data.beds + " PN";
+      document.getElementById('baths').textContent = data.baths + " WC";
+      document.getElementById('price').textContent = data.price;
+      document.getElementById('priceBox').textContent = data.price;
+      document.getElementById('priceSticky').textContent = data.price;
+      document.getElementById('area2').textContent = data.area;
+      document.getElementById('beds2').textContent = data.beds;
+      document.getElementById('baths2').textContent = data.baths;
+
+      // Update map if available
+      const iframe = document.querySelector('iframe[title="Map"]');
+      if(iframe && data.mapQuery){
+        iframe.src = `https://maps.google.com/maps?q=${data.mapQuery}&t=&z=14&ie=UTF8&iwloc=&output=embed`;
+      }
+    }
+
+    // Click thumbnail -> scroll tới ảnh tương ứng
+    const gallery = document.getElementById('galleryTrack');
+    document.querySelectorAll('.thumb').forEach((btn, idx)=>{
+      btn.addEventListener('click', ()=>{
+        const target = gallery.children[idx];
+        if(!target) return;
+        const offset = target.offsetLeft - 8; // 8 = gap/ padding
+        gallery.scrollTo({left: offset, behavior:'smooth'});
+        // highlight border
+        document.querySelectorAll('.thumb').forEach(b=>b.classList.remove('ring-2','ring-brand-400'));
+        btn.classList.add('ring-2','ring-brand-400');
+      });
+    });
+  </script>
+</body>
+</html>

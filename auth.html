@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Đăng nhập / Đăng ký — Glass UI</title>
+  <meta name="description" content="Xác thực tài khoản với giao diện glassmorphism hiện đại" />
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {50:'#ecfff8',100:'#c9fff0',200:'#9cf9e1',300:'#69f0d0',400:'#38e0bc',500:'#18caa7',600:'#11a68b',700:'#108673',800:'#0f685b',900:'#0d5149'},
+            ink:   {50:'#f7f8fb',100:'#eef1f7',200:'#dfe5ef',300:'#c8d1e1',400:'#9fb1c8',500:'#6f88a6',600:'#506a89',700:'#3f556f',800:'#35485e',900:'#2b3b4d'}
+          },
+          boxShadow: {
+            glow: '0 10px 40px rgba(16, 166, 139, 0.35)',
+            glass: '0 10px 30px rgba(2,6,23,.25)'
+          },
+          backdropBlur: {
+            glass: '12px'
+          },
+          keyframes: {
+            floaty: { '0%,100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-12px)'} },
+            pulseglow: { '0%,100%': { opacity: .45 }, '50%': { opacity: .9 } }
+          },
+          animation: {
+            floaty: 'floaty 8s ease-in-out infinite',
+            pulseglow: 'pulseglow 5s ease-in-out infinite'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Glass helpers (kết hợp cùng Tailwind) */
+    .glass-card{
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
+      border: 1px solid rgba(255,255,255,.28);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 20px 60px rgba(2,6,23,.35);
+    }
+    .input-ghost{
+      background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.18));
+      border: 1px solid rgba(255,255,255,.38);
+      color: #0f172a;
+    }
+    .input-ghost::placeholder{ color: rgba(15,23,42,.55); }
+    .input-ghost:focus{
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(24,202,167,.25), inset 0 1px 0 rgba(255,255,255,.45);
+      border-color: rgba(24,202,167,.75);
+      background: linear-gradient(180deg, rgba(255,255,255,.38), rgba(255,255,255,.24));
+    }
+    .btn-glass{
+      background: linear-gradient(180deg, rgba(24,202,167,.9), rgba(16,166,139,.9));
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.35);
+      box-shadow: 0 10px 30px rgba(24,202,167,.35);
+    }
+    .btn-glass:hover{ filter: brightness(.97); transform: translateY(-1px); }
+    .btn-ghost{
+      background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.12));
+      border: 1px solid rgba(255,255,255,.32);
+      color:#0f172a;
+    }
+    .error-msg{ display:none; }
+    .field-error .error-msg{ display:block; }
+    .field-error .input-ghost{
+      border-color: rgba(244,63,94,.6)!important;
+      box-shadow: 0 0 0 4px rgba(244,63,94,.2);
+    }
+  </style>
+</head>
+<body class="h-full text-ink-900">
+  <!-- Background gradient + blobs -->
+  <div class="fixed inset-0 -z-10 bg-gradient-to-br from-ink-50 via-white to-brand-50"></div>
+  <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-20 -left-16 w-80 h-80 rounded-full bg-brand-300 blur-3xl opacity-60 animate-floaty"></div>
+    <div class="absolute top-40 -right-24 w-96 h-96 rounded-full bg-teal-300 blur-[100px] opacity-50 animate-floaty" style="animation-delay: -2s"></div>
+    <div class="absolute bottom-0 left-1/3 w-[28rem] h-[28rem] rounded-full bg-cyan-300 blur-[120px] opacity-40 animate-pulseglow"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-20 backdrop-blur-glass bg-white/40 border-b border-white/30">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-emerald-600 text-white font-bold shadow-glow">B</span>
+        <span class="font-semibold tracking-tight">BĐS Glass</span>
+      </a>
+      <a href="index.html#contact" class="text-sm text-ink-700 hover:text-brand-700">Cần hỗ trợ?</a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="min-h-[calc(100vh-3.5rem)]">
+    <div class="max-w-6xl mx-auto px-4 py-10 grid lg:grid-cols-2 gap-10 items-center">
+      <!-- Left visual -->
+      <div class="relative hidden lg:block">
+        <div class="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-white/30 to-white/10 border border-white/30 backdrop-blur-glass"></div>
+        <div class="relative rounded-[2rem] overflow-hidden border border-white/40 shadow-glass">
+          <img class="w-full h-[440px] object-cover" src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600&auto=format&fit=crop" alt="hero">
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-900/30 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-white/40 backdrop-blur-glass border border-white/50">
+            <p class="text-sm text-ink-800">“Một mái nhà tốt bắt đầu từ quyết định đúng.”</p>
+            <p class="text-xs text-ink-700/80 mt-1">Minh bạch dữ liệu • Hỗ trợ pháp lý • Tư vấn tài chính</p>
+          </div>
+        </div>
+        <div class="mt-6 grid grid-cols-3 gap-4">
+          <div class="glass-card rounded-2xl p-4">
+            <div class="text-sm text-ink-700/80">Minh bạch</div>
+            <div class="font-semibold">Thông tin rõ ràng</div>
+          </div>
+          <div class="glass-card rounded-2xl p-4">
+            <div class="text-sm text-ink-700/80">Pháp lý</div>
+            <div class="font-semibold">Hỗ trợ A→Z</div>
+          </div>
+          <div class="glass-card rounded-2xl p-4">
+            <div class="text-sm text-ink-700/80">Tài chính</div>
+            <div class="font-semibold">Tối ưu lãi suất</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right auth glass card -->
+      <div class="w-full">
+        <div class="rounded-[22px] glass-card overflow-hidden">
+          <!-- Tabs -->
+          <div class="grid grid-cols-2 relative">
+            <button id="tab-login" class="py-3 text-center text-sm font-semibold text-ink-800">Đăng nhập</button>
+            <button id="tab-register" class="py-3 text-center text-sm font-semibold text-ink-700/80">Đăng ký</button>
+            <!-- indicator -->
+            <div id="tab-indicator" class="absolute bottom-0 h-[2px] w-1/2 bg-gradient-to-r from-brand-400 to-brand-600 transition-all duration-300"></div>
+          </div>
+          <div class="h-[1px] bg-white/40"></div>
+
+          <!-- Body -->
+          <div class="p-6 md:p-8">
+            <!-- Social -->
+            <div class="grid sm:grid-cols-2 gap-2">
+              <button class="btn-ghost rounded-xl px-4 py-2 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-5 h-5 mr-2"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303C33.56,31.91,29.12,35,24,35c-6.627,0-12-5.373-12-12 c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.938,3.062l5.657-5.657C34.756,5.104,29.652,3,24,3C12.955,3,4,11.955,4,23 s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#FF3D00" d="M6.306,14.691l6.571,4.818C14.61,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.938,3.062l5.657-5.657 C34.756,5.104,29.652,3,24,3C16.318,3,9.76,7.063,6.306,14.691z"/><path fill="#4CAF50" d="M24,43c5.065,0,9.609-1.942,13.047-5.111l-6.023-4.927C29.935,34.956,27.146,36,24,36 c-5.091,0-9.41-3.27-10.995-7.83l-6.553,5.047C9.761,40.938,16.32,43,24,43z"/><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-1.638,3.91-6.078,7-11.303,7c-5.091,0-9.41-3.27-10.995-7.83 l-6.553,5.047C9.761,40.938,16.32,43,24,43c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/></svg>
+                Google
+              </button>
+              <button class="btn-ghost rounded-xl px-4 py-2 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-5 h-5 mr-2"><path fill="#039be5" d="M42,37c0,2.762-2.238,5-5,5H11c-2.762,0-5-2.238-5-5V11c0-2.762,2.238-5,5-5h26c2.762,0,5,2.238,5,5V37z"/><path fill="#fff" d="M34,24h-4v-4c0-1.104,0.896-2,2-2h2v-6h-4c-3.314,0-6,2.686-6,6v6h-4v6h4v12h6V30h4L34,24z"/></svg>
+                Facebook
+              </button>
+            </div>
+            <div class="flex items-center gap-3 my-5">
+              <div class="h-px bg-white/40 w-full"></div>
+              <span class="text-xs text-ink-700/80">hoặc</span>
+              <div class="h-px bg-white/40 w-full"></div>
+            </div>
+
+            <!-- Login -->
+            <form id="form-login" class="grid gap-4" novalidate>
+              <div id="lg-email" class="grid gap-1">
+                <label class="text-sm text-ink-700/80">Email</label>
+                <input class="input-ghost rounded-xl px-3 py-2" type="email" name="email" placeholder="you@example.com" required />
+                <p class="error-msg text-sm text-rose-600">Vui lòng nhập email hợp lệ.</p>
+              </div>
+              <div id="lg-pass" class="grid gap-1">
+                <label class="text-sm text-ink-700/80">Mật khẩu</label>
+                <div class="relative">
+                  <input id="lg-pass-input" class="input-ghost rounded-xl px-3 py-2 pr-10" type="password" name="password" placeholder="••••••••" minlength="6" required />
+                  <button type="button" data-toggle="#lg-pass-input" class="absolute inset-y-0 right-0 px-3 text-ink-700/70">👁️</button>
+                </div>
+                <p class="error-msg text-sm text-rose-600">Mật khẩu tối thiểu 6 ký tự.</p>
+              </div>
+              <div class="flex items-center justify-between">
+                <label class="flex items-center gap-2 text-sm text-ink-800">
+                  <input type="checkbox" class="rounded border-white/40 bg-white/30"> Nhớ tôi
+                </label>
+                <a href="#" class="text-sm text-brand-700 hover:text-brand-800">Quên mật khẩu?</a>
+              </div>
+              <button class="btn-glass rounded-xl px-4 py-2 w-full font-medium">Đăng nhập</button>
+              <p class="text-xs text-ink-700/80 text-center">
+                Bằng việc tiếp tục, bạn đồng ý với <a href="#" class="text-brand-700 hover:text-brand-800">Điều khoản</a> & <a href="#" class="text-brand-700 hover:text-brand-800">Chính sách</a>.
+              </p>
+            </form>
+
+            <!-- Register -->
+            <form id="form-register" class="grid gap-4 hidden" novalidate>
+              <div id="rg-name" class="grid gap-1">
+                <label class="text-sm text-ink-700/80">Họ và tên</label>
+                <input class="input-ghost rounded-xl px-3 py-2" type="text" name="name" placeholder="Nguyễn Văn A" minlength="2" required />
+                <p class="error-msg text-sm text-rose-600">Vui lòng nhập họ tên.</p>
+              </div>
+              <div id="rg-email" class="grid gap-1">
+                <label class="text-sm text-ink-700/80">Email</label>
+                <input class="input-ghost rounded-xl px-3 py-2" type="email" name="email" placeholder="you@example.com" required />
+                <p class="error-msg text-sm text-rose-600">Vui lòng nhập email hợp lệ.</p>
+              </div>
+              <div id="rg-phone" class="grid gap-1">
+                <label class="text-sm text-ink-700/80">Số điện thoại</label>
+                <input class="input-ghost rounded-xl px-3 py-2" type="tel" name="phone" placeholder="09xxxxxxxx" pattern="^(0|\\+84)[0-9]{8,10}$" required />
+                <p class="error-msg text-sm text-rose-600">Vui lòng nhập số điện thoại hợp lệ.</p>
+              </div>
+              <div id="rg-pass" class="grid gap-1">
+                <label class="text-sm text-ink-700/80">Mật khẩu</label>
+                <div class="relative">
+                  <input id="rg-pass-input" class="input-ghost rounded-xl px-3 py-2 pr-10" type="password" name="password" placeholder="••••••••" minlength="6" required />
+                  <button type="button" data-toggle="#rg-pass-input" class="absolute inset-y-0 right-0 px-3 text-ink-700/70">👁️</button>
+                </div>
+                <p class="error-msg text-sm text-rose-600">Mật khẩu tối thiểu 6 ký tự.</p>
+              </div>
+              <div id="rg-pass2" class="grid gap-1">
+                <label class="text-sm text-ink-700/80">Nhập lại mật khẩu</label>
+                <input class="input-ghost rounded-xl px-3 py-2" type="password" name="confirm" placeholder="••••••••" minlength="6" required />
+                <p class="error-msg text-sm text-rose-600">Mật khẩu nhập lại chưa trùng khớp.</p>
+              </div>
+              <label class="flex items-start gap-2 text-sm text-ink-800">
+                <input type="checkbox" class="mt-1 rounded border-white/40 bg-white/30" required>
+                Tôi đồng ý với <a href="#" class="ml-1 text-brand-700 hover:text-brand-800">Điều khoản dịch vụ</a>
+              </label>
+              <button class="btn-glass rounded-xl px-4 py-2 w-full font-medium">Tạo tài khoản</button>
+              <p class="text-xs text-ink-700/80 text-center">Đã có tài khoản?
+                <a id="switchToLogin" class="text-brand-700 hover:text-brand-800 cursor-pointer">Đăng nhập</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer mini -->
+  <footer class="py-6">
+    <p class="text-center text-xs text-ink-700/70">© 2025 BĐS Glass. All rights reserved.</p>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    // Tabs
+    const tabLogin = document.getElementById('tab-login');
+    const tabRegister = document.getElementById('tab-register');
+    const indicator = document.getElementById('tab-indicator');
+    const formLogin = document.getElementById('form-login');
+    const formRegister = document.getElementById('form-register');
+    const inlineRegister = document.getElementById('inlineRegister');
+    const switchToLogin = document.getElementById('switchToLogin');
+
+    function setTab(which){
+      const isLogin = which === 'login';
+      formLogin.classList.toggle('hidden', !isLogin);
+      formRegister.classList.toggle('hidden', isLogin);
+      tabLogin.classList.toggle('text-ink-800', isLogin);
+      tabLogin.classList.toggle('text-ink-700/80', !isLogin);
+      tabRegister.classList.toggle('text-ink-800', !isLogin);
+      tabRegister.classList.toggle('text-ink-700/80', isLogin);
+      indicator.style.transform = isLogin ? 'translateX(0%)' : 'translateX(100%)';
+      const url = new URL(location.href);
+      url.searchParams.set('tab', isLogin ? 'login' : 'register');
+      history.replaceState({}, '', url);
+    }
+    tabLogin.addEventListener('click', ()=>setTab('login'));
+    tabRegister.addEventListener('click', ()=>setTab('register'));
+    inlineRegister?.addEventListener('click', ()=>setTab('register'));
+    switchToLogin?.addEventListener('click', ()=>setTab('login'));
+    // init
+    setTab(new URLSearchParams(location.search).get('tab') === 'register' ? 'register' : 'login');
+
+    // Show / Hide password
+    document.querySelectorAll('[data-toggle]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const sel = btn.getAttribute('data-toggle');
+        const input = document.querySelector(sel);
+        if(!input) return;
+        input.type = input.type === 'password' ? 'text' : 'password';
+      });
+    });
+
+    // Helper
+    function markError(containerId, hasError){
+      const el = document.getElementById(containerId);
+      if(!el) return;
+      el.classList.toggle('field-error', hasError);
+    }
+
+    // Validate — demo
+    formLogin.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const email = formLogin.email;
+      const pass  = formLogin.password;
+      const emailValid = /\S+@\S+\.\S+/.test(email.value);
+      const passValid  = (pass.value||'').length >= 6;
+      markError('lg-email', !emailValid);
+      markError('lg-pass',  !passValid);
+      if(emailValid && passValid){
+        // TODO: submit thực tế
+        alert('Đăng nhập thành công (demo)');
+      }
+    });
+
+    formRegister.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name  = formRegister.name;
+      const email = formRegister.email;
+      const phone = formRegister.phone;
+      const pass  = formRegister.password;
+      const conf  = formRegister.confirm;
+
+      const okName  = (name.value||'').trim().length >= 2;
+      const okEmail = /\S+@\S+\.\S+/.test(email.value);
+      const okPhone = /^(0|\+84)[0-9]{8,10}$/.test(phone.value||'');
+      const okPass  = (pass.value||'').length >= 6;
+      const okConf  = conf.value === pass.value && (conf.value||'').length >= 6;
+
+      markError('rg-name',  !okName);
+      markError('rg-email', !okEmail);
+      markError('rg-phone', !okPhone);
+      markError('rg-pass',  !okPass);
+      markError('rg-pass2', !okConf);
+
+      if(okName && okEmail && okPhone && okPass && okConf){
+        alert('Tạo tài khoản thành công (demo)');
+        setTab('login');
+      }
+    });
+  </script>
+</body>
+</html>
